@@ -1,0 +1,17 @@
+group 'soluto'
+version '0.0.1'
+
+apply plugin: 'java'
+
+repositories{
+    jcenter()
+    maven { url "http://solutonexus.soluto.local:8081/nexus/content/repositories/development/"  }
+}
+
+dependencies {
+    compile 'com.pubnub:pubnub:4.0.1'
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'soluto.congo:core:0.0.5'
+    testCompile 'junit:junit:4.12'
+}
