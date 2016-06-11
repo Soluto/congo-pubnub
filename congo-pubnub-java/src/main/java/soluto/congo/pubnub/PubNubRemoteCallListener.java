@@ -7,13 +7,13 @@ import com.pubnub.api.callbacks.SubscribeCallback;
 import com.pubnub.api.models.consumer.PNStatus;
 import com.pubnub.api.models.consumer.pubsub.PNMessageResult;
 import com.pubnub.api.models.consumer.pubsub.PNPresenceEventResult;
-import com.remote.RemoteCall;
-import com.remote.RemoteCallListener;
 
 import java.util.Arrays;
 
 import rx.Observable;
 import rx.subjects.PublishSubject;
+import soluto.congo.core.RemoteCall;
+import soluto.congo.core.RemoteCallListener;
 
 public class PubNubRemoteCallListener implements RemoteCallListener {
     private PublishSubject<RemoteCall> remoteCalls = PublishSubject.create();

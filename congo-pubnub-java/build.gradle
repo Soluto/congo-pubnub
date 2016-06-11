@@ -1,17 +1,58 @@
-group 'soluto'
-version '0.0.1'
-
 apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+    }
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId 'soluto'
+            artifactId 'congo-pubnub-java'
+            version '0.0.1'
+        }
+    }
+}
+
+bintray {
+    user = 'soluto'
+    key = 'fc108a95c482db7b1bacd1d5a603be9c37779463'
+    publications = ['MyPublication']
+    configurations = ['archives']
+    pkg {
+        version {
+            name = '0.0.1'
+        }
+        repo = 'soluto-jars'
+        name = 'congo-pubnub-java'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/Soluto/congo-pubnub.git'
+
+    }
+}
 
 repositories{
     jcenter()
-    maven { url "http://solutonexus.soluto.local:8081/nexus/content/repositories/development/"  }
+    maven {
+        url "https://dl.bintray.com/soluto/soluto-jars"
+    }
 }
 
 dependencies {
     compile 'com.pubnub:pubnub:4.0.1'
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.google.code.gson:gson:2.4'
-    compile 'soluto.congo:core:0.0.6'
+    compile 'com.pubnub:pubnub:4.0.1'
+    compile 'soluto:congo-core-java:0.0.1'
     testCompile 'junit:junit:4.12'
 }
+
+

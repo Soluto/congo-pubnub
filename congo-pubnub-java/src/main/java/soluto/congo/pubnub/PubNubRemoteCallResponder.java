@@ -1,17 +1,15 @@
 package soluto.congo.pubnub;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.pubnub.api.PNConfiguration;
 import com.pubnub.api.PubNub;
 import com.pubnub.api.PubNubException;
 import com.pubnub.api.callbacks.PNCallback;
 import com.pubnub.api.models.consumer.PNPublishResult;
 import com.pubnub.api.models.consumer.PNStatus;
-import com.remote.BridgeErrorMessage;
-import com.remote.RemoteCall;
-import com.remote.RemoteCallResponder;
+import soluto.congo.core.BridgeErrorMessage;
+import soluto.congo.core.RemoteCall;
+import soluto.congo.core.RemoteCallResponder;
 
 import java.util.HashMap;
 import java.util.Map;
