@@ -11,33 +11,6 @@ buildscript {
     }
 }
 
-publishing {
-    publications {
-        MyPublication(MavenPublication) {
-            from components.java
-            groupId 'soluto'
-            artifactId 'congo-pubnub-java'
-            version '0.0.1'
-        }
-    }
-}
-
-bintray {
-    user = 'soluto'
-    key = ''
-    publications = ['MyPublication']
-    pkg {
-        version {
-            name = '0.0.1'
-        }
-        repo = 'soluto-jars'
-        name = 'congo-pubnub-java'
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/Soluto/congo-pubnub.git'
-
-    }
-}
-
 repositories{
     jcenter()
     maven {
@@ -52,6 +25,33 @@ dependencies {
     compile 'com.pubnub:pubnub:4.0.1'
     compile 'soluto:congo-core-java:0.0.3'
     testCompile 'junit:junit:4.12'
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId PACKAGE_GROUP
+            artifactId PACKAGE_NAME
+            version PACKAGE_VERSION
+        }
+    }
+}
+
+bintray {
+    user = BINTRAY_USER
+    key = BINTRAY_KEY
+    publications = ['MyPublication']
+    pkg {
+        version {
+            name = PACKAGE_VERSION
+        }
+        repo = 'soluto-jars'
+        name = 'congo-pubnub-java'
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/Soluto/congo-pubnub.git'
+
+    }
 }
 
 
