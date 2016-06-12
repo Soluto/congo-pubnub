@@ -26,7 +26,6 @@ bintray {
     user = 'soluto'
     key = ''
     publications = ['MyPublication']
-    configurations = ['archives']
     pkg {
         version {
             name = '0.0.1'
@@ -51,7 +50,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.pubnub:pubnub:4.0.1'
-    compile 'soluto:congo-core-java:0.0.1'
+    compile 'soluto:congo-core-java:0.0.3'
     testCompile 'junit:junit:4.12'
 }
 
