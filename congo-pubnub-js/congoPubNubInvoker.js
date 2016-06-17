@@ -1,7 +1,9 @@
 var Observable = require('rx').Observable;
+var Notification = require('rx').Notification;
+
 var PUBNUB = require('pubnub');
 
-module.exports = function(pnConfiguration, remoteCallsChannel) {
+module.exports = function(pnConfiguration, requestChannel, responseChannel) {
     return {
         invoke: function(remoteCall) {
             return Observable.create(function (observer)  {
@@ -15,46 +17,53 @@ module.exports = function(pnConfiguration, remoteCallsChannel) {
                 });
 
                 pubnub.subscribe({
-                    channel : remoteCallsChannel + "_" + remoteCall.correlationId,
-                    message : function(message) {
-                        var m = JSON.parse(message)
-                        if (m.type === "onNext") {
-                            observer.onNext(m);
-                        }
-                        else if (m.type === "onCompleted") {
-                            observer.onCompleted();
-                            pubnub.unsubscribe({channel : remoteCallsChannel + "_" + remoteCall.correlationId});
-                        }
-                        else if (m.type === "onError") {
-                            observer.onError(m.errorItem);
-                            pubnub.unsubscribe({channel : remoteCallsChannel + "_" + remoteCall.correlationId});
-                        }
+                    channel : responseChannel,
+                    message : function(remoteCallResult) {
+                        observer.onNext(JSON.parse(remoteCallResult));
                     },
-                    error: function (pubnubError) {
-                        console.log(pubnubError);
-                        observer.onError(pubnubError);
+                    error: function (pubnubSubscribeError) {
+                        console.log(pubnubSubscribeError);
+                        observer.onError(pubnubSubscribeError);
                     }
                 });
+
                 console.log("publish " + JSON.stringify(remoteCall));
                 pubnub.publish({
-                    channel : remoteCallsChannel,
+                    channel : requestChannel,
                     message : remoteCall,
-                    error : function(publishError) {
-                        observer.onError(publishError);
+                    error : function(pubnubPublishError) {
+                        observer.onError(pubnubPublishError);
                     }
                 });
 
                 return function() {
                     var cancelRemoteCall = Object.assign({}, remoteCall, {isCancelled: true})
                     pubnub.publish({
-                        channel : remoteCallsChannel,
+                        channel : requestChannel,
                         message : cancelRemoteCall,
-                        error : function(publishError) {
-                            observer.onError(publishError);
+                        error : function(pubnubPublishError) {
+                            console.log("publish error!")
+                            console.log(pubnubPublishError)
+                            observer.onError(pubnubPublishError);
                         }
                     });
                 };
-            });
+            })
+            .filter(function(remoteCallResult) {
+                return remoteCallResult.correlationId === remoteCall.correlationId;
+            })
+            .flatMap(function(remoteCallResult) {
+                if (remoteCallResult.notification.kind === "OnNext") {
+                    return Observable.return(Notification.createOnNext(remoteCallResult.notification.value));
+                }
+                if (remoteCallResult.notification.kind === "OnCompleted") {
+                    return Observable.return(Notification.createOnCompleted());
+                }
+                if (remoteCallResult.notification.kind === "OnError") {
+                    return Observable.return(Notification.createOnNext(remoteCallResult.notification.error));
+                }
+            })
+            .dematerialize();
         }
     }
 }
