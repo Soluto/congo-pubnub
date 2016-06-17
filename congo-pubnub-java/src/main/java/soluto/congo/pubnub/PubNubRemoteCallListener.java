@@ -18,10 +18,10 @@ import soluto.congo.core.RemoteCallListener;
 public class PubNubRemoteCallListener implements RemoteCallListener {
     private PublishSubject<RemoteCall> remoteCalls = PublishSubject.create();
     private PubNub pubNub;
-    private String remoteCallsChannel;
+    private String requestChannel;
 
-    public PubNubRemoteCallListener(PNConfiguration pnConfiguration, String remoteCallsChannel) {
-        this.remoteCallsChannel = remoteCallsChannel;
+    public PubNubRemoteCallListener(PNConfiguration pnConfiguration, String requestChannel) {
+        this.requestChannel = requestChannel;
         pubNub = new PubNub(pnConfiguration);
 
         pubNub.addListener(new SubscribeCallback() {
@@ -46,7 +46,7 @@ public class PubNubRemoteCallListener implements RemoteCallListener {
 
     @Override
     public Observable<RemoteCall> getRemoteCalls() {
-        pubNub.subscribe().channels(Arrays.asList(remoteCallsChannel)).execute();
+        pubNub.subscribe().channels(Arrays.asList(requestChannel)).execute();
         return remoteCalls;
     }
 }
