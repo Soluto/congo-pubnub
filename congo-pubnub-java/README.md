@@ -1,5 +1,5 @@
 
-#Congo PubNub - JavaScript
+#Congo PubNub - Java
 PubNub implemenation of [Congo](https://github.com/Soluto/congo-core)
 
 ### Installation
@@ -19,7 +19,6 @@ dependencies {
     compile 'soluto:congo-core-java:0.0.4'
     compile 'soluto:congo-pubnub-java:0.0.2'
     compile 'com.pubnub:pubnub:4.0.1'
-    compile 'io.reactivex:rxjava:1.1.5'
     ...
 }
 ```
