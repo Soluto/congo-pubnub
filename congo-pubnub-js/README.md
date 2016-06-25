@@ -12,10 +12,12 @@ You'll need to setup a free account in PubNub and create an app. For more info s
 First, create the invoker:
 ```javascript
 var CongoPubNubInvoker = require('congo-pubnub-js').CongoPubNubInvoker;
+
 var pubnubConfiguration = {
     publishKey: "<YOUR_PUBNUB_APP_PUBLISH_KEY>",  
     subscribeKey: "<YOUR_PUBNUB_APP_SUBSCRIBE_KEY>"
 };
+
 var invoker = new CongoPubNubInvoker(
     pubnubConfiguration, 
     "<REQUEST_CHANNEL_ID>", 
@@ -29,14 +31,25 @@ var remoteCall = {
     method: "someMethod"
 };
 
+pubnubInvoker.invoke(remoteCall)
+    .doOnNext(function(item) {
+        console.log(item);
+    })
+    .doOnCompleted(function() {
+        console.log("completed");
+    })
+    .doOnError(function(error) {
+        console.log(error);
+    })
+    .subscribe();
 ```
-
+or use [Congo Proxy](https://github.com/Soluto/congo-proxy)
 
 ####Listener
-Not implemented
+Not implemented yet
 
 ####Responder
-Not implemened
+Not implemened yet
 
 ### Example
 See real app example in: https://github.com/Soluto/congo-examples/tree/master/pubNubExample
