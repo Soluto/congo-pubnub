@@ -29,9 +29,6 @@ You'll need to setup a free account in PubNub and create an app. For more info s
 Also you'll need to define PubNub request and response channel for message transportation 
 
 ### Usage
-####Invoker
-Not implemented yet
-
 ####Listener, Responder & Router
 ```java
 PNConfiguration pnConfiguration = new PNConfiguration();
