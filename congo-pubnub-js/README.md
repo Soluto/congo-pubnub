@@ -44,10 +44,5 @@ pubnubInvoker.invoke(remoteCall)
 ```
 or use [Congo Proxy](https://github.com/Soluto/congo-proxy)
 
-####Listener, Responder & Router
-Not implemented yet
-
 ### Example
 See real app example in: https://github.com/Soluto/congo-examples/tree/master/pubNubExample
-
-
