@@ -1,5 +1,4 @@
 #Congo PubNub - JavaScript
-PubNub implemenation of [Congo](https://github.com/Soluto/congo-core)
 
 ### Installation
 ```npm install congo-pubnub-js --save```
