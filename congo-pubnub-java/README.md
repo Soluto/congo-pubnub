@@ -1,7 +1,5 @@
 
 #Congo PubNub - Java
-PubNub implemenation of [Congo](https://github.com/Soluto/congo-core)
-
 ### Installation
 In your build.gradle file add:
 ```
